@@ -1,0 +1,47 @@
+# Linux Architecture, Processes, and systemd
+
+## 1. Linux Architecture: The Big Picture
+Linux is split into two primary worlds separated by the System Call Interface (SCI):
+
+* Kernel Space: The core of the OS. It has unrestricted access to hardware (CPU, memory, disks) and manages memory, device drivers, and process scheduling.
+* User Space: Where your applications, containers, shells, and databases run. They cannot touch hardware directly and must ask the kernel for permission via system calls.
+
++---------------------------------------------------+
+|                    USER SPACE                     |
+|  [ Applications ]  [ Nginx/Docker ]  [ Shells ]   |
++----------------------------------+----------------+
+| System Calls (open, read, fork)
++----------------------------------v----------------+
+|                   KERNEL SPACE                    |
+|  [ Process Scheduler ] [ Memory ] [ Drivers ]     |
++---------------------------------------------------+
+
+---
+
+## 2. Init & systemd (The Master Process)
+When a Linux server boots up, the kernel initializes and starts exactly one process: **`init`**. It always gets **PID 1** (Process ID 1) and is the parent of all other processes.
+Modern Linux distributions use **systemd** as their init system. 
+
+* **Why it matters:** It starts services in parallel (making boots faster), manages service dependencies, automatically restarts crashed applications, and centralizes log management via `journalctl`.
+
+---
+
+## 3. Process Lifecycle & States
+
+Every program running in Linux is a process. New processes are created when an existing parent process clones itself using `fork()`, and then loads a new program using `exec()`.
+
+When troubleshooting high CPU or stuck applications, look for these Process States:
+
+* Running/Runnable (R):* The process is either actively using the CPU or waiting in line to use it.
+* Stopped (T):** Paused by a user or signal (e.g., pressing `Ctrl + Z`).
+* Zombie (Z):** A process that has finished executing, but its parent hasn't acknowledged its exit code yet. It consumes no resources except a slot in the PID table.
+
+---
+
+## 4. The DevOps Daily Toolkit (Top 5 Commands)
+
+ls | List all file | -a to show all hidden file , -l show all the details of file.
+ps aux` | Snapshots all running processes. | Find the exact PID of a rogue Python script or Java app.
+top`(or `htop`) | Live, interactive resource monitor. | Spot which process is spiking CPU/Memory usage right now.
+kill -9 <PID>`| Forcefully terminates a process. | Kill a frozen background worker that refuses to close gracefully.
+systemctl status nginx | Checks the health of a systemd service. | Debug why a web server failed to start after a configuration change. 
