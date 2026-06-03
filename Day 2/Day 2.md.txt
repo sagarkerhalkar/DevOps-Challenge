@@ -1,0 +1,35 @@
+# Linux System Administration Cheat Sheet
+>Day 03 - 90DaysOfDevOps Challenge
+📁 File System & Navigation
+
+1. pwd - Prints the absolute path of the current working directory.
+2. ls -la  - Lists all files and directories, including hidden ones, with detailed permissions and sizes.
+3. cd -  - Switches back to the previous working directory instantly.
+4. mkdir -p /path/to/dir  - Creates a directory and any missing parent directories automatically.
+5. cp -r source/ dest/  - Copies directories and their contents recursively.
+6. mv old_name new_name  - Renames a file/directory or moves it to a different location.
+7. rm -rf name  - Forcefully and recursively removes a file or directory (use with extreme caution).
+8. chmod 755 script.sh  - Changes file permissions so the owner can read/write/execute, and others can read/execute.
+9. chown root:root file.txt  - Changes both the owner and the group ownership of a file to root.
+10. df -h  - Displays available and used disk space on mounted filesystems in human-readable format.
+11. du -sh    - Shows the total size of each file and folder in the current directory.
+12. tail -f /var/log/nginx/access.log  - Monitors log files in real-time as new lines are appended.
+
+---
+Process Management
+
+1. ps aux  - Displays a snapshot of every running process on the system with owner details.
+2. top  - Provides a dynamic, real-time view of running processes and system resource usage.
+3. htop  - An interactive, color-coded, user-friendly process viewer (improved version of top).
+4. kill -9 PID  - Forcefully terminates a specific process using its Process ID.
+5. pkill -f process_name  - Kills all running processes matching the specified name.
+6. systemctl status docker  - Checks the current operational status of a systemd service (e.g., Docker).
+
+---
+ Network Troubleshooting
+
+1. ip addr show  - Displays active network interfaces, status, and assigned IP addresses.
+2. ping -c 4 google.com  - Sends 4 ICMP echo packets to verify network connectivity to a host.
+3. curl -I https://example.com  - Fetches only the HTTP headers from a URL to check server response codes.
+4. dig google.com  - Performs a DNS lookup to retrieve domain name records and verify resolution.
+5. ss -tunlp  - Lists all active TCP/UDP listening ports along with their corresponding process PIDs.
